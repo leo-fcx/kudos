@@ -1,0 +1,29 @@
+version: "3"
+
+services:
+  users-db:
+    image: mongo
+    container_name: kudos-mongo-dc
+    ports:
+      - "27017:27017"
+
+  kudos-db:
+    image: cassandra
+    container_name: kudos-cassandra-dc
+    ports:
+      - "9042:9042"
+
+  users-relational-db:
+    image: mysql
+    container_name: kudos-mysql-dc
+    ports:
+      - "3306:3306"
+    environment:
+      - MYSQL_ALLOW_EMPTY_PASSWORD="true"
+
+  rabbit-mq:
+    image: rabbitmq:3.6-management
+    container_name: kudos-rabbitmq-dc
+    ports:
+      - "5672:5672"
+      - "9999:15672"

@@ -1,0 +1,34 @@
+{
+  "name": "users-relational",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "npm run copy-dependencies && npm run config-db && npm run init-db && nodemon --exec babel-node server.js",
+    "sequelize-skeleton": "./node_modules/sequelize-cli/lib/sequelize init:models; ./node_modules/sequelize-cli/lib/sequelize init:config",
+    "init-db": "echo 'DROP DATABASE IF EXISTS users_relational; CREATE DATABASE users_relational CHARACTER SET utf8 COLLATE utf8_general_ci' | mysql -h 0.0.0.0 -uroot",
+    "config-db": "echo 'use mysql;update user set authentication_string=\"\", plugin=\"mysql_native_password\" where user=\"root\";flush privileges;' | mysql -h 0.0.0.0 -uroot",
+    "copy-dependencies": "rm -rf common && cp -r ../common ."
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "express": "^4.17.1",
+    "mysql2": "^1.7.0",
+    "node-logger": "0.0.1",
+    "sequelize": "^5.19.1",
+    "uuid": "^3.3.3"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.6.2",
+    "@babel/node": "^7.6.2",
+    "@babel/preset-env": "^7.6.2",
+    "faker": "^4.1.0",
+    "lodash.random": "^3.2.0",
+    "lodash.times": "^4.3.2",
+    "nodemon": "^1.19.2",
+    "sequelize-cli": "^5.5.1"
+  }
+}

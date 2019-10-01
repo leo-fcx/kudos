@@ -7,4 +7,4 @@ module.exports = {
     CREATE: 'create',
     DELETE: 'delete',
   }
-}
+};

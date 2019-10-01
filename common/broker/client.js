@@ -3,18 +3,18 @@ import amqp from 'amqplib';
 
 const logger = NodeLogger.createLogger('./logs/development.log');
 
-const getChannel = function(key, cb) {
+const getChannel = (key, cb) => {
   return amqp
     .connect(`amqp://${process.env.USER}:${process.env.PASS}@0.0.0.0:5672`)
-    .then(function(connection) {
+    .then((connection) => {
       logger.info('RabbitMQ client opened connection.');
       return connection.createChannel();
     })
-    .then(function(channel) {
+    .then((channel) => {
       logger.info('RabbitMQ client created channel.');
       return channel
         .assertQueue(key)
-        .then(function(ok) {
+        .then(() => {
           logger.info(`RabbitMQ client is using channel: ${ key }`);
           cb(channel);
         });

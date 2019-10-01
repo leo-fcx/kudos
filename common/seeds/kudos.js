@@ -7,12 +7,12 @@ const totalKudos = process.argv[2] || 10;
 
 UserService
   .get()
-  .then(function(response) {
+  .then((response) => {
     let totalUsers = response.length;
 
     console.log(`Creating ${totalKudos} kudos:`);
 
-    for(let i = 0; i < totalKudos; i++) {
+    for (let i = 0; i < totalKudos; i++) {
 
       let sourceUser;
       let targetUser;
@@ -27,7 +27,7 @@ UserService
       sourceUser = response[indexSourceUser];
       targetUser = response[indexTargetUser];
 
-      setTimeout(function() {
+      setTimeout(() => {
         KudoService
           .create({
             id: uuidv1(),

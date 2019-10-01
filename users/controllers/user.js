@@ -1,6 +1,7 @@
-let logger = require('node-logger').createLogger('./logs/development.log');
+import NodeLogger from 'node-logger';
+import BrokerClient from '../common/broker/client';
 
-let BrokerClient = require('../broker/client');
+const logger = NodeLogger.createLogger('./logs/development.log');
 
 let User = require('../models/user');
 
@@ -23,7 +24,8 @@ let handleError = function(err, res) {
 exports.index = function (req, res, next) {
   const criteria = req.query;
   const hasCriteria = Object.keys(criteria).length;
-  console.log('index:criteria', hasCriteria, criteria);
+
+  logger.debug(`index:criteria: hasCriteria = ${ hasCriteria }, criteria = ${ criteria }`);
 
   if (hasCriteria)
     next();
@@ -126,7 +128,7 @@ exports.update = function (req, res) {
 exports.delete = function (req, res) {
   let userId = req.params.user_id;
 
-  User.remove({ _id: userId }, function (err, user) {
+  User.deleteOne({ _id: userId }, function (err) {
     if (err) handleError(err, res);
 
     res.json({
@@ -152,7 +154,8 @@ exports.delete = function (req, res) {
 exports.search = function (req, res) {
   const criteria = req.query;
   const hasCriteria = Object.keys(criteria).length;
-  console.log('search:criteria', hasCriteria, criteria);
+
+  logger.debug(`index:criteria: hasCriteria = ${ hasCriteria }, criteria = ${ criteria }`);
 
   if (hasCriteria)
     User.search({ query_string: criteria }, function (err, users) {

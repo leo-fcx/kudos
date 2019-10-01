@@ -1,12 +1,9 @@
-let logger = require('node-logger').createLogger('./logs/development.log');
+import NodeLogger from 'node-logger';
+import uuidv1 from 'uuid/v1';
+import BrokerClient from '../common/broker/client';
+import CONSTANTS from '../common/constants';
 
-let BrokerClient = require('../broker/client');
-
-let KUDO = 'kudo';
-let ACTIONS = {
-  CREATE: 'create',
-  DELETE: 'delete',
-};
+const logger = NodeLogger.createLogger('./logs/development.log');
 
 let handleError = function(err, res) {
   if (res)
@@ -49,7 +46,7 @@ exports.index = function (req, res) {
  */
 exports.new = function (req, res) {
   let kudo = new models.instance.Kudo({
-    id: req.body.id,
+    id: uuidv1(),
     source : req.body.source,
     target : req.body.target,
     topic : req.body.topic,
@@ -67,10 +64,10 @@ exports.new = function (req, res) {
     logger.info(`Kudo ${kudo.id} created.`);
 
     BrokerClient.send({
-      model: KUDO,
+      model: CONSTANTS.MODELS.KUDO,
       id: kudo.id,
       userId: kudo.target,
-      action: ACTIONS.CREATE
+      action: CONSTANTS.ACTIONS.CREATE
     });
   });
 };
@@ -82,7 +79,7 @@ exports.new = function (req, res) {
  */
 exports.view = function (req, res) {
   let kudoId = req.params.kudo_id;
-  let query = { id: parseInt(kudoId) };
+  let query = { id: kudoId };
 
   models.instance.Kudo.findOne(query, function(err, kudo){
     if (err) handleError(err, res);
@@ -112,7 +109,7 @@ exports.update = function (req, res) {
  */
 exports.delete = function (req, res) {
   let kudoId = req.params.kudo_id;
-  let query = { id: parseInt(kudoId) };
+  let query = { id: kudoId };
 
   models.instance.Kudo.findOne(query, function(err, kudo){
     if (err) handleError(err, res);
@@ -128,10 +125,10 @@ exports.delete = function (req, res) {
       logger.info(`Kudo ${kudo.id} deleted.`);
 
       BrokerClient.send({
-        model: KUDO,
+        model: CONSTANTS.MODELS.KUDO,
         id: kudo.id,
         userId: kudo.target,
-        action: ACTIONS.DELETE
+        action: CONSTANTS.ACTIONS.DELETE
       });
     });
   });

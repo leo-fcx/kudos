@@ -1,5 +1,7 @@
-let userController = require('./controllers/user');
-let router = require('express').Router();
+import express from 'express';
+import userController from '../controllers/user';
+
+const router = express.Router();
 
 router.get('/', function (req, res) {
   res.json({

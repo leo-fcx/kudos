@@ -1,8 +1,8 @@
 import NodeLogger from 'node-logger';
-import KudoService from '../services/kudo';
+import KudoService from '../common/services/kudo';
+import CONSTANTS from '../common/constants';
 
 const logger = NodeLogger.createLogger('./logs/development.log');
-const CONSTANTS = require('../constants');
 
 class UserConsumer {
   constructor() {

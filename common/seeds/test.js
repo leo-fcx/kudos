@@ -5,7 +5,7 @@ let kudoCriteria = { target: '5d8cccdea2abd0e2a1ab420b' };
 
 KudoService
   .get(kudoCriteria)
-  .then(function(response) {
+  .then((response) => {
     console.log('');
     console.log('--------------------------------------------------------------------------------');
     console.log(`Retrieving KUDOS, criteria: ${ JSON.stringify(kudoCriteria) }`);
@@ -16,7 +16,7 @@ let userCriteria = { query: 'ray' };
 
 UserService
   .search(userCriteria)
-  .then(function(response) {
+  .then((response) => {
     console.log('');
     console.log('--------------------------------------------------------------------------------');
     console.log(`Retrieving USERS, criteria: ${ JSON.stringify(userCriteria) }`);

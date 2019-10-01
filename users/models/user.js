@@ -1,5 +1,5 @@
-let mongoose = require('mongoose');
-let mongoosastic = require('mongoosastic')
+import mongoose from 'mongoose';
+import mongoosastic from 'mongoosastic';
 
 let userSchema = mongoose.Schema({
   username: {
@@ -27,4 +27,4 @@ let User = module.exports = mongoose.model('user', userSchema);
 
 module.exports.get = function (callback, limit) {
   User.find(callback).limit(limit);
-}
+};

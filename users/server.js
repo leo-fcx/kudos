@@ -1,21 +1,15 @@
-let express = require('express');
-let bodyParser = require('body-parser');
-let mongoose = require('mongoose');
-let apiRoutes = require('./apiRoutes');
-let BrokerClient = require('./broker/client');
+import express from 'express';
+import bodyParser from 'body-parser';
+import mongoose from 'mongoose';
+import apiRoutes from './routes';
+import BrokerClient from './common/broker/client';
 
 BrokerClient.init();
-
-mongoose.connect('mongodb://localhost/users', { useNewUrlParser: true });
+mongoose.connect('mongodb://localhost/users', { useNewUrlParser: true, useUnifiedTopology: true });
 
 let app = express();
 let db = mongoose.connection;
 let port = process.env.PORT || 8080;
-
-if (!db)
-  console.log('Error connecting DB.');
-else
-  console.log('DB connected successfully.');
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -34,3 +28,8 @@ app.listen(port, function () {
   console.log('');
   console.log('**********************************************************');
 });
+
+if (!db)
+  console.log('Error connecting DB.');
+else
+  console.log('DB connected successfully.');

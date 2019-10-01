@@ -1,8 +1,8 @@
 import NodeLogger from 'node-logger';
-import BrokerClient from './broker/client';
+import BrokerClient from './common/broker/client';
 import UserConsumer from './consumers/user';
 import KudoConsumer from './consumers/kudo';
-import CONSTANTS from './constants';
+import CONSTANTS from './common/constants';
 
 const logger = NodeLogger.createLogger('./logs/development.log');
 const kudoConsumer = new KudoConsumer(logger);

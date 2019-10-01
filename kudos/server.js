@@ -1,11 +1,31 @@
-let express = require('express');
-let bodyParser = require('body-parser');
-let models = require('express-cassandra');
-
-let apiRoutes = require('./routes');
-let BrokerClient = require('./broker/client');
+import express from 'express';
+import bodyParser from 'body-parser';
+import models from 'express-cassandra';
+import apiRoutes from './routes';
+import BrokerClient from './common/broker/client';
 
 BrokerClient.init();
+
+let app = express();
+let port = process.env.PORT || 9090;
+
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+
+// Send message for default URL
+app.get('/', (req, res) => res.send('Welcome to Kudos API.'));
+
+// Use Api routes in the App
+app.use('/api', apiRoutes);
+
+// Launch app to listen to specified port
+app.listen(port, function () {
+  console.log('**********************************************************');
+  console.log('');
+  console.log('     KUDOS App: Running Kudos API on port:' + port);
+  console.log('');
+  console.log('**********************************************************');
+});
 
 models.setDirectory( __dirname + '/models').bind({
   clientOptions: {
@@ -49,23 +69,3 @@ models.setDirectory( __dirname + '/models').bind({
   global.models = models;
 });
 
-let app = express();
-let port = process.env.PORT || 9090;
-
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
-
-// Send message for default URL
-app.get('/', (req, res) => res.send('Welcome to Kudos API.'));
-
-// Use Api routes in the App
-app.use('/api', apiRoutes);
-
-// Launch app to listen to specified port
-app.listen(port, function () {
-  console.log('**********************************************************');
-  console.log('');
-  console.log('     KUDOS App: Running Kudos API on port:' + port);
-  console.log('');
-  console.log('**********************************************************');
-});
