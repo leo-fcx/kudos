@@ -1,16 +1,13 @@
 import uuidv1 from 'uuid/v1';
 import NodeLogger from 'node-logger';
-
-const db = require('../models');
-// let BrokerClient = require('../broker/client');
+import BrokerClient from '../common/broker/client';
+import CONSTANTS from '../common/constants';
+import db from '../models';
 
 const logger = NodeLogger.createLogger('./logs/development.log');
+const brokerClientRelational = new BrokerClient(CONSTANTS.QUEUES.KUDOS_RELATIONAL);
 
-// let USER = 'user';
-// let ACTIONS = {
-//   CREATE: 'create',
-//   DELETE: 'delete',
-// };
+brokerClientRelational.init();
 
 let handleError = (err, res) => {
   if (res)
@@ -62,6 +59,12 @@ exports.new = (req, res) => {
       });
 
       logger.info(`User ${user.id} created.`);
+
+      brokerClientRelational.send({
+        model: CONSTANTS.MODELS.USER,
+        id: user.id,
+        action: CONSTANTS.ACTIONS.CREATE
+      });
     })
     .catch((err) => handleError(err, res));
 };
@@ -130,6 +133,12 @@ exports.delete = (req, res) => {
       });
 
       logger.info(`User ${userId} deleted.`);
+
+      brokerClientRelational.send({
+        model: CONSTANTS.MODELS.USER,
+        id: userId,
+        action: CONSTANTS.ACTIONS.DELETE
+      });
     })
     .catch((err) => handleError(err, res));
 };
@@ -140,24 +149,7 @@ exports.delete = (req, res) => {
  * @param res
  */
 exports.search = (req, res) => {
-  // const criteria = req.query;
-  // const hasCriteria = Object.keys(criteria).length;
-  // console.log('search:criteria', hasCriteria, criteria);
-  //
-  // if (hasCriteria)
-  //   User.search({ query_string: criteria }, function (err, users) {
-  //     if (err) handleError(err, res);
-  //
-  //     res.json({
-  //       status: 'success',
-  //       message: 'Users searched.',
-  //       data: users
-  //     });
-  //
-  //     console.log('Yesy!', users);
-  //
-  //     logger.info(`Users search done, criteria: ${ JSON.stringify(criteria) }.`);
-  //   });
+  // TODO: Pending implementation
 };
 
 

@@ -1,8 +1,9 @@
 import axios from 'axios';
 import NodeLogger from 'node-logger';
+import CONFIG from '../config';
 
 const logger = NodeLogger.createLogger('./logs/development.log');
-const kudosAPIUrl = 'http://localhost:9090/api/kudos';
+const kudosAPIUrl = CONFIG.KUDOS_API_URL;
 
 exports.get = function (queryParams) {
   return axios({

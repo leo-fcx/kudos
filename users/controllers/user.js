@@ -1,15 +1,13 @@
 import NodeLogger from 'node-logger';
 import BrokerClient from '../common/broker/client';
+import CONSTANTS from "../common/constants";
 
 const logger = NodeLogger.createLogger('./logs/development.log');
+const brokerClient = new BrokerClient(CONSTANTS.QUEUES.KUDOS);
+
+brokerClient.init();
 
 let User = require('../models/user');
-
-let USER = 'user';
-let ACTIONS = {
-  CREATE: 'create',
-  DELETE: 'delete',
-};
 
 let handleError = function(err, res) {
   if (res)
@@ -63,10 +61,10 @@ exports.new = function (req, res) {
 
     logger.info(`User ${user._id} created.`);
 
-    BrokerClient.send({
-      model: USER,
+    brokerClient.send({
+      model: CONSTANTS.MODELS.USER,
       id: user.id,
-      action: ACTIONS.CREATE
+      action: CONSTANTS.ACTIONS.CREATE
     });
   });
 };
@@ -138,10 +136,10 @@ exports.delete = function (req, res) {
 
     logger.info(`User ${userId} deleted.`);
 
-    BrokerClient.send({
-      model: USER,
+    brokerClient.send({
+      model: CONSTANTS.MODELS.USER,
       id: userId,
-      action: ACTIONS.DELETE
+      action: CONSTANTS.ACTIONS.DELETE
     });
   });
 };
@@ -166,8 +164,6 @@ exports.search = function (req, res) {
         message: 'Users searched.',
         data: users
       });
-
-      console.log('Yesy!', users);
 
       logger.info(`Users search done, criteria: ${ JSON.stringify(criteria) }.`);
     });

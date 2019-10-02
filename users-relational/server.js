@@ -3,10 +3,6 @@ import bodyParser from 'body-parser';
 import apiRoutes from './routes';
 import db from './models';
 
-// let BrokerClient = require('./broker/client');
-
-// BrokerClient.init();
-
 let app = express();
 let port = process.env.PORT || 8081;
 

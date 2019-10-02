@@ -7,6 +7,7 @@ import CONSTANTS from './common/constants';
 const logger = NodeLogger.createLogger('./logs/development.log');
 const kudoConsumer = new KudoConsumer(logger);
 const userConsumer = new UserConsumer(logger);
+const brokerClient = new BrokerClient(CONSTANTS.QUEUES.KUDOS);
 
 console.log('**********************************************************');
 console.log('');
@@ -14,7 +15,7 @@ console.log('     KUDOS App: Running Stats service.');
 console.log('');
 console.log('**********************************************************');
 
-BrokerClient.consume((msg, channel) => {
+brokerClient.consume((msg, channel) => {
   if (msg === null) return;
 
   let consumer;

@@ -2,9 +2,6 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import models from 'express-cassandra';
 import apiRoutes from './routes';
-import BrokerClient from './common/broker/client';
-
-BrokerClient.init();
 
 let app = express();
 let port = process.env.PORT || 9090;

@@ -1,4 +1,4 @@
-module.exports = {
+const CONSTANTS = {
   MODELS: {
     USER: 'user',
     KUDO: 'kudo'
@@ -6,5 +6,11 @@ module.exports = {
   ACTIONS: {
     CREATE: 'create',
     DELETE: 'delete',
+  },
+  QUEUES: {
+    KUDOS: 'kudos',
+    KUDOS_RELATIONAL: 'kudosrelational'
   }
 };
+
+module.exports = CONSTANTS;

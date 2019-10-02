@@ -47,4 +47,4 @@ class BrokerClient {
   }
 }
 
-module.exports = new BrokerClient('kudos');
+module.exports = BrokerClient;

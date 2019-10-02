@@ -2,9 +2,7 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import mongoose from 'mongoose';
 import apiRoutes from './routes';
-import BrokerClient from './common/broker/client';
 
-BrokerClient.init();
 mongoose.connect('mongodb://localhost/users', { useNewUrlParser: true, useUnifiedTopology: true });
 
 let app = express();

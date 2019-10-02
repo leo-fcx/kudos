@@ -4,6 +4,11 @@ import BrokerClient from '../common/broker/client';
 import CONSTANTS from '../common/constants';
 
 const logger = NodeLogger.createLogger('./logs/development.log');
+const brokerClient = new BrokerClient(CONSTANTS.QUEUES.KUDOS);
+const brokerClientRelational = new BrokerClient(CONSTANTS.QUEUES.KUDOS_RELATIONAL);
+
+brokerClient.init();
+brokerClientRelational.init();
 
 let handleError = function(err, res) {
   if (res)
@@ -25,8 +30,6 @@ exports.index = function (req, res) {
   let query = req.query; //{ $limit:10 };
 
   models.instance.Kudo.find(query, { allow_filtering: true }, function(err, kudos){
-    console.log(query);
-
     if (err) handleError(err, res);
 
     res.json({
@@ -63,12 +66,15 @@ exports.new = function (req, res) {
 
     logger.info(`Kudo ${kudo.id} created.`);
 
-    BrokerClient.send({
+    const message = {
       model: CONSTANTS.MODELS.KUDO,
       id: kudo.id,
       userId: kudo.target,
       action: CONSTANTS.ACTIONS.CREATE
-    });
+    };
+
+    brokerClient.send(message);
+    brokerClientRelational.send(message);
   });
 };
 
@@ -124,12 +130,15 @@ exports.delete = function (req, res) {
 
       logger.info(`Kudo ${kudo.id} deleted.`);
 
-      BrokerClient.send({
+      const message = {
         model: CONSTANTS.MODELS.KUDO,
         id: kudo.id,
         userId: kudo.target,
         action: CONSTANTS.ACTIONS.DELETE
-      });
+      };
+
+      brokerClient.send(message);
+      brokerClientRelational.send(message);
     });
   });
 };

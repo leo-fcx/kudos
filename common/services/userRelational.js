@@ -3,12 +3,12 @@ import NodeLogger from 'node-logger';
 import CONFIG from '../config';
 
 const logger = NodeLogger.createLogger('./logs/development.log');
-const usersAPIUrl = CONFIG.USERS_API_URL;
+const usersRelationalAPIUrl = CONFIG.USERS_RELATIONAL_API_URL;
 
 exports.get = function () {
   return axios({
     method: 'get',
-    url: `${ usersAPIUrl }`
+    url: `${ usersRelationalAPIUrl }`
   })
     .then(response => {
       let res = response.data.data;
@@ -21,7 +21,7 @@ exports.get = function () {
 exports.update = function (userId, data) {
   return axios({
     method: 'put',
-    url: `${ usersAPIUrl }/${ userId }`,
+    url: `${ usersRelationalAPIUrl }/${ userId }`,
     data: data
   })
     .then(response => {
@@ -35,7 +35,7 @@ exports.update = function (userId, data) {
 exports.create = function (data) {
   return axios({
     method: 'post',
-    url: `${ usersAPIUrl }`,
+    url: `${ usersRelationalAPIUrl }`,
     data: data
   })
     .then(response => {
@@ -49,7 +49,7 @@ exports.create = function (data) {
 exports.delete = function (userId) {
   return axios({
     method: 'post',
-    url: `${ usersAPIUrl }/${ userId }`,
+    url: `${ usersRelationalAPIUrl }/${ userId }`,
     data: data
   })
     .then(response => {
@@ -63,7 +63,7 @@ exports.delete = function (userId) {
 exports.search = function (queryParams) {
   return axios({
     method: 'get',
-    url: `${ usersAPIUrl }`,
+    url: `${ usersRelationalAPIUrl }`,
     params: queryParams
   })
     .then(response => {
