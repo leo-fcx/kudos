@@ -27,3 +27,27 @@ services:
     ports:
       - "5672:5672"
       - "9999:15672"
+
+  time-series-db:
+    image: influxdb
+    container_name: kudos-influxdb-dc
+    ports:
+      - "8083:8083"
+      - "8086:8086"
+    volumes:
+      - influxdb:/var/lib/influxdb
+    environment:
+      - INFLUXDB_ADMIN_ENABLED=true
+      - INFLUXDB_DB=kudos
+      - INFLUXDB_ADMIN_USER=admin
+      - INFLUXDB_ADMIN_PASSWORD=admin
+
+
+  grafana-dashboard:
+    image: grafana/grafana
+    container_name: kudos-grafana-dc
+    ports:
+      - "3000:3000"
+
+volumes:
+  influxdb:
