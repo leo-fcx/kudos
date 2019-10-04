@@ -1,27 +1,11 @@
 # kudos
 ## Topology ad Technologies
 
-Following diagram reflects the topology when we are connecting a Users API supported by a Realtional DB to a Kudos API which is supported by a NoSQL DB. Please note that the communication between the Stats service with the Databases is direct.
-
-![alt text](https://raw.githubusercontent.com/leo-fcx/kudos/master/images/diagram-relational.png)
-
-This other diagram reflects the topology when we are connecting a Users API supported by a NoSQL DB to a Kudos API which is supported by a NoSQL DB. Please note that the communication between the Stats service with the Databases does not exist anymore and alternatively this is done through the APIs.
-
 ![alt text](https://raw.githubusercontent.com/leo-fcx/kudos/master/images/diagram.png)
 
 ## Pre-requisites
 
 Have following servers up and running in local/same machine. Please note that we use default or none credentials for them.
-
-#### NEW: Using Docker Compose
-
-As a single and easir alternative, we introduced the usage od DOCKER COMPOSE to start all our services. If you want, you can run following commands in the root of the project to have all servers working:
- * To create and start all docker instances: `docker-compose up -d`
- * To stop all docker instances: `docker-compose stop`
- * To start all docker instances: `docker-compose start`
- * To stop and destroy all docker instances: `docker-compose down`
-
-Alternatively, following single commands to start separately each server are still valid.
 
 #### RabbitMQ Management server
 
@@ -74,19 +58,6 @@ USER=user PASS=pwd npm run start
 This is going to start the Users REST API at: `http:8080//localhost/api/users`
 Where `user` and `pwd` are credentials for RabbitMQ instance.
 
-#### NEW: Users API using Relational DB
-
-To start Users API, run:
-
-```
-cd usersRelational
-npm install
-USER=user PASS=pwd npm run start
-```
-This is going to start the Users REST API at: `http:8081//localhost/api/users`
-Where `user` and `pwd` are credentials for RabbitMQ instance.
-
-
 #### Kudos API
 
 To start Kudos API, run:
@@ -108,20 +79,8 @@ cd stats
 npm install
 USER=user PASS=pwd npm run start
 ```
+This is going to start the Users REST API at: `http:9090//localhost/api/users`
 Where `user` and `pwd` are credentials for RabbitMQ instance.
-Please note that this STATs service is consuming data from RabbitMQ queue called: *kudos*
-
-#### NEW: STATS service using Relational DB
-
-To start STATS Relational service, run:
-
-```
-cd stats
-npm install
-USER=user PASS=pwd npm run start
-```
-Where `user` and `pwd` are credentials for RabbitMQ instance.
-Please note that this STATs Relational service is consuming data from RabbitMQ queue called: *kudosrelational*
 
 ## How to test?
 
